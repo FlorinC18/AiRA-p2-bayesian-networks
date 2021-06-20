@@ -59,7 +59,7 @@ def prepare_data(data):
 
             # map the value to themselves if it's a discrete value 
             # or else map it to 0
-            if isinstance(split_line[i], int):
+            if i == len(split_line)-1:
                 attribute_map[split_line[i]] = int(split_line[i])
             else:
                 attribute_map[split_line[i]] = 0
@@ -172,4 +172,4 @@ if __name__ == "__main__":
     write_header(train_file)
     write_header(test_file)
     write_data(data, train_file, test_file)
-    # print_maps() # uncoment to see all the mappings of the real values to discrete values
+    print_maps() # uncoment to see all the mappings of the real values to discrete values
