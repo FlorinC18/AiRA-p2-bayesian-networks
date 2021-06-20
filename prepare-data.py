@@ -84,9 +84,23 @@ def map_real_to_discrete_values():
 
 # write the corresponding header in the arff files
 def write_header(arff_file):
+    # write @RELATION line
     arff_file.write("@RELATION glass\n\n")
+
+    # we treat each attribute as a nominal in oder to use bayes in weka
+    #for each attribute:
     for attr in attributes_list:
-        arff_file.write("@ATTRIBUTE " + attr + " NUMERIC\n")
+        attr_map = maps.get(attr)
+        attr_keys = attr_map.keys()
+       
+        # get all possible values for each atribute to list them in the header
+        values = ""
+        for key in attr_keys:
+            values += str(attr_map[key]) + ","
+        values = values[:-1]
+
+        # write @ATTRIBUTE line
+        arff_file.write("@ATTRIBUTE " + attr +" {"+ values +"}\n")
 
 
 # write the data in the arff files replacing all the real values with their mapped values
@@ -145,10 +159,10 @@ def write_line(file, original_line):
         attr_discrete_value = attribute_map.get(original_line[i])
 
         # concatenate with the previous values to create the line
-        if i == 0:
-            output_line += str(attr_discrete_value)
-        else:    
-            output_line += "," + str(attr_discrete_value)
+        output_line += str(attr_discrete_value) + ","
+    
+    # remove last "," added
+    output_line = output_line[:-1]
 
     # set newline caracter at the end of the line
     output_line += "\n"
