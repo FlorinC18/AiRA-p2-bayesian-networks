@@ -3,7 +3,7 @@ import random
 
 maps = {} # dictionary that contains each attribute as key and their own mapping dictionary as value
 attributes_list = [] # list of all atributes
-seed = "54198" # seed for random module
+seed = "54198" # default seed for random module
 
 
 # Check if user has provided the correct arguments when executing the script
@@ -24,6 +24,7 @@ def check_arguments():
 
     # Get seed for random module from arguments if it was provided
     if len(sys.argv) == 5:
+        global seed
         seed = sys.argv[4]
 
     return data, train_file, test_file
@@ -172,4 +173,4 @@ if __name__ == "__main__":
     write_header(train_file)
     write_header(test_file)
     write_data(data, train_file, test_file)
-    print_maps() # uncoment to see all the mappings of the real values to discrete values
+    # print_maps() # uncoment to see all the mappings of the real values to discrete values
